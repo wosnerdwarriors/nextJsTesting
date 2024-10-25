@@ -16,7 +16,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '18.18.0' # Ensure this matches your required Node.js version
+          node-version: '18.x' # Ensure this matches your required Node.js version
 
       - name: Install dependencies
         run: |
@@ -26,13 +26,15 @@ jobs:
         run: |
           npm run build
 
-      - name: Export and Deploy to GitHub Pages
+      - name: Export
         run: |
-          npx next build && npx next export
+          npx next export
+
+      - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./out # Default output directory for next export
           publish_branch: gh-pages # Branch to deploy to (usually gh-pages)
-          cname: <your-custom-domain> # Optional: replace with your custom domain if you have one
+
 
